@@ -16,16 +16,23 @@ var (
 )
 
 func connectDB(user, password, dbName, host, port, sslmode string) {
+	fmt.Println("starting once.do")
 	once.Do(func() {
+		fmt.Println("creating DSN")
 		connStr := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=%s", user, password, host, port, dbName, sslmode)
+		fmt.Println("Starting sql.Open")
 		db, err = sql.Open("postgres", connStr)
+		fmt.Println("Database opened")
 		if err != nil {
 			log.Fatalf("Failed to connect to database: %v", err)
 		}
 
-		if err = db.Ping(); err != nil {
+		fmt.Println("pinning DB")
+		err = db.Ping()
+		if err != nil {
 			log.Fatalf("Failed to ping database: %v", err)
 		}
+		fmt.Println("database pinned")
 
 		log.Println("Successfully connected to database")
 	})

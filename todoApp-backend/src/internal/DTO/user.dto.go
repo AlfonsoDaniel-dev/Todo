@@ -1,14 +1,29 @@
 package DTO
 
 import (
+	"errors"
 	"github.com/google/uuid"
 	"time"
 )
 
-type CreateUserDTO struct {
+type UserDTO struct {
 	Username string `json:"username"`
 	Password string `json:"password"`
 	Email    string `json:"email"`
+}
+
+func CreateUserDTO(userName, password, email string) (*UserDTO, error) {
+
+	if userName == "" || password == "" || email == "" {
+		return nil, errors.New("username or password or email is empty")
+	}
+
+	return &UserDTO{
+		Username: userName,
+		Password: password,
+		Email:    email,
+	}, nil
+	
 }
 
 type GetUser struct {
