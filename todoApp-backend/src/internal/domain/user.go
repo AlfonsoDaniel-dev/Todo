@@ -18,6 +18,7 @@ type User struct {
 
 type UserRepository interface {
 	Save(user *User) error
+	GetUserData(email string) (User, error)
 }
 
 func NewUser(UserName, Email string, Password string) (User, error) {

@@ -2,8 +2,8 @@ package app
 
 import (
 	"errors"
-	"todoApp-backend/src/internal/DTO"
 	"todoApp-backend/src/internal/domain"
+	"todoApp-backend/src/internal/infrastructure/DTO"
 )
 
 type UserServices struct {
@@ -16,27 +16,20 @@ func NewUserServices(repo domain.UserRepository) *UserServices {
 	}
 }
 
-func (S *UserServices) CreateUser(UserDTO *DTO.UserDTO) (*DTO.GetUser, error) {
+func (S *UserServices) CreateUser(UserDTO *DTO.UserDTO) error {
 	if UserDTO.Username == "" || UserDTO.Email == "" || UserDTO.Password == "" {
-		return nil, errors.New("username or email or password is empty")
+		return errors.New("username or email or password is empty")
 	}
 
 	User, err := domain.NewUser(UserDTO.Username, UserDTO.Email, UserDTO.Password)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	err = S.Repository.Save(&User)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	savedUserData := DTO.GetUser{
-		Id:        User.Id,
-		Username:  User.Username,
-		Email:     User.Email.Value,
-		CreatedAt: User.CreatedAt,
-	}
-
-	return &savedUserData, nil
+	return nil
 }

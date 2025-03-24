@@ -16,6 +16,10 @@ type Task struct {
 	UpdatedAt time.Time
 }
 
+type TaskRepository interface {
+	Save(task *Task) error
+}
+
 func NewTask(ownerId uuid.UUID, title, Body string) (*Task, error) {
 	if title == "" || Body == "" {
 		return nil, errors.New("title or body is empty")

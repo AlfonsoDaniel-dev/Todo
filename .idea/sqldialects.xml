@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="SqlDialectMappings">
-    <file url="file://$PROJECT_DIR$/todoApp-backend/src/external/DataBase/001_dataBase_userTable_up.sql" dialect="GenericSQL" />
+    <file url="file://$PROJECT_DIR$/todoApp-backend/src/external/DataBase/schema/23-03-25-UP.sql" dialect="GenericSQL" />
     <file url="PROJECT" dialect="PostgreSQL" />
   </component>
 </project>
