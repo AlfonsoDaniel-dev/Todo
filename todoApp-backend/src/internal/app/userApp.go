@@ -21,7 +21,7 @@ func (S *UserServices) Login(loginDTO DTO.LoginDTO) (string, error) {
 		return "", errors.New("Username or Password is empty")
 	}
 
-	// get user Email coincides with the password
+	// Login proccess
 	// 1. get password from db with the email
 	// 2. compare form password with db password
 	// 3. if it's ok generate jwt and send it through client request, if it's not ok we will return a 401 code
