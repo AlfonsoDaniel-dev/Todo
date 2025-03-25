@@ -19,6 +19,7 @@ type User struct {
 type UserRepository interface {
 	Save(user *User) error
 	GetUserData(email string) (User, error)
+	CheckUserExists(id uuid.UUID) (bool, error)
 }
 
 func NewUser(UserName, Email string, Password string) (User, error) {
