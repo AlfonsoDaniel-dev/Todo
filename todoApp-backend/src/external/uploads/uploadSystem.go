@@ -10,7 +10,7 @@ type UploadAttempt struct {
 	FileName   string
 	FileExt    string
 	Repository string
-	Status     bool
+	Status     error
 	DoneChan   chan struct{}
 }
 
@@ -32,20 +32,24 @@ func NewUploadEngine(maxThreads int, repositoryPath string) (*UploadEngine, erro
 	}, nil
 }
 
-func (UE *UploadEngine) addWorker(numOfJobs int, porpuse string) int {
+func (UE *UploadEngine) startWorker(numOfJobs int, porpuse string) *worker {
 
 	workerId := len(UE.workers) + 1
 	Worker := newWorker(workerId, numOfJobs, porpuse)
 	UE.workers[workerId] = Worker
 
-	return workerId
+	return Worker
 }
 
 func (UE *UploadEngine) deleteWorker(id int) {
 
 	Worker := UE.workers[id]
 
+	close(Worker.Queue)
+
 	Worker.CancelChan <- struct{}{}
+
+	close(Worker.CancelChan)
 
 	delete(UE.workers, id)
 }
@@ -55,18 +59,57 @@ func (UE *UploadEngine) Upload(ImageToUpload []byte, fileName, fileExtension str
 		return errors.New("arguments needed to upload image")
 	}
 
-	Worker := UE.addWorker(len(UE.workers), "upload")
+	Worker := UE.startWorker(len(UE.workers), "upload")
+
+	attempt := UploadAttempt{
+		Id:         1,
+		data:       ImageToUpload,
+		FileName:   fileName,
+		FileExt:    fileExtension,
+		Repository: UE.RepositoryPath,
+		DoneChan:   make(chan struct{}),
+	}
+
+	Worker.Queue <- attempt
+
+	<-attempt.DoneChan
+
+	if attempt.Status != nil {
+		UE.deleteWorker(Worker.Id)
+		return attempt.Status
+	}
+
+	UE.deleteWorker(Worker.Id)
 
 	return errors.New("not implemented yet")
 
 }
 
-func (UE *UploadEngine) Get(fileName string) ([]bytes, error) {
-	if fileName == "" {
+func (UE *UploadEngine) Get(fileName, fileRepository string) ([]byte, error) {
+	if fileName == "" || fileRepository == "" {
 		return nil, errors.New("arguments needed to get an image")
 	}
 
-	Worker := UE.addWorker(len(UE.workers), "get")
+	Worker := UE.startWorker(len(UE.workers), "get")
+	attempt := UploadAttempt{
+		Id:         1,
+		data:       nil,
+		FileName:   fileName,
+		FileExt:    "",
+		Repository: fileRepository,
+		DoneChan:   make(chan struct{}),
+	}
 
-	return nil, errors.New("not implemented yet")
+	Worker.Queue <- attempt
+
+	<-attempt.DoneChan
+
+	if attempt.Status != nil {
+		UE.deleteWorker(Worker.Id)
+		return nil, attempt.Status
+	}
+
+	UE.deleteWorker(Worker.Id)
+
+	return attempt.data, errors.New("not implemented yet")
 }

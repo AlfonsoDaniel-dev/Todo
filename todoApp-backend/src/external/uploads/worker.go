@@ -5,8 +5,8 @@ type worker struct {
 	Free       bool
 	Propose    string
 	CancelChan chan struct{}
-	Queue      <-chan UploadAttempt
-	Result     chan<- UploadAttempt
+	Queue      chan UploadAttempt
+	Result     chan UploadAttempt
 }
 
 func (W *worker) work() {
@@ -19,22 +19,15 @@ func (W *worker) work() {
 
 				switch W.Propose {
 				case "upload":
-					err := uploadImage(job.data, job.FileName, job.Repository)
-					if err != nil {
-						job.Status = false
-					}
-					job.Status = true
+					job.Status = uploadImage(job.data, job.FileName, job.Repository)
 
 					W.Free = true
 
 					job.DoneChan <- struct{}{}
 				case "get":
 					img, err := getImage(job.FileName, job.Repository)
-					if err != nil {
-						job.Status = false
-					}
-					job.Status = true
 
+					job.Status = err
 					job.data = img
 
 					W.Free = true
