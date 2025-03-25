@@ -14,13 +14,13 @@ func (W *worker) work() {
 			select {
 			case job := <-W.Queue:
 
-				job.DoneChan <- struct{}{}
-				W.Result <- job
 				W.Free = false
 
-				// proccess
+				err := uploadImage()
+				if err != nil {
+					job.Status = false
+				}
 
-				W.Free = true
 			case _ = <-W.CancelChan:
 				return
 			}

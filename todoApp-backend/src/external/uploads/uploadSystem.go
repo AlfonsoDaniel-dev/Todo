@@ -1,15 +1,23 @@
 package uploads
 
 import (
+	"bytes"
 	"errors"
+	"github.com/nfnt/resize"
+	"image"
+	"image/jpeg"
+	"image/png"
 	"os"
 )
 
 type UploadAttempt struct {
-	Id       int
-	data     []byte
-	Status   bool
-	DoneChan chan struct{}
+	Id               int
+	data             []byte
+	FileName         string
+	FileExt          string
+	UploadRepository string
+	Status           bool
+	DoneChan         chan struct{}
 }
 
 type UploadEngine struct {
@@ -46,17 +54,9 @@ func (UE *UploadEngine) deleteWorker(id int) {
 	delete(UE.workers, id)
 }
 
-func (UE *UploadEngine) Upload(Image []byte, fileName string) error {
-	if Image == nil || len(Image) == 0 || fileName == "" {
-		return errors.New("Image is nil")
+func (UE *UploadEngine) Upload(ImageToUpload []byte, fileName, fileExtension string) error {
+	if ImageToUpload == nil || len(ImageToUpload) == 0 || fileName == "" || fileExtension == "" {
+		return errors.New("arguments needed to upload image")
 	}
 
-	file, err := os.Create(fileName)
-	if err != nil {
-		return err
-	}
-
-	file.Write(Image)
-
-	return nil
 }
