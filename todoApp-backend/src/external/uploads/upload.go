@@ -8,6 +8,7 @@ import (
 	"image/jpeg"
 	"image/png"
 	"os"
+	"path/filepath"
 )
 
 func prepareImage(image image.Image, format string) ([]byte, error) {
@@ -75,4 +76,13 @@ func uploadImage(ImageToUpload []byte, fileName, repositoryPath string) error {
 	}
 
 	return nil
+}
+
+func getImage(fileName, repositoryPath string) ([]byte, error) {
+
+	completeFile := fileName + ".jpeg"
+
+	completePath := filepath.Join(repositoryPath, completeFile)
+
+	return os.ReadFile(completePath)
 }

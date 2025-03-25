@@ -3,6 +3,7 @@ package uploads
 type worker struct {
 	Id         int
 	Free       bool
+	Propose    string
 	CancelChan chan struct{}
 	Queue      <-chan UploadAttempt
 	Result     chan<- UploadAttempt
@@ -16,9 +17,29 @@ func (W *worker) work() {
 
 				W.Free = false
 
-				err := uploadImage()
-				if err != nil {
-					job.Status = false
+				switch W.Propose {
+				case "upload":
+					err := uploadImage(job.data, job.FileName, job.Repository)
+					if err != nil {
+						job.Status = false
+					}
+					job.Status = true
+
+					W.Free = true
+
+					job.DoneChan <- struct{}{}
+				case "get":
+					img, err := getImage(job.FileName, job.Repository)
+					if err != nil {
+						job.Status = false
+					}
+					job.Status = true
+
+					job.data = img
+
+					W.Free = true
+
+					job.DoneChan <- struct{}{}
 				}
 
 			case _ = <-W.CancelChan:
@@ -28,10 +49,11 @@ func (W *worker) work() {
 	}()
 }
 
-func newWorker(id, numJobs int) *worker {
+func newWorker(id, numJobs int, porpuse string) *worker {
 
 	Worker := &worker{
 		Id:         id,
+		Propose:    porpuse,
 		CancelChan: make(chan struct{}),
 		Queue:      make(chan UploadAttempt, numJobs),
 		Result:     make(chan UploadAttempt, numJobs),

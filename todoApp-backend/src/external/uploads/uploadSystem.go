@@ -1,23 +1,17 @@
 package uploads
 
 import (
-	"bytes"
 	"errors"
-	"github.com/nfnt/resize"
-	"image"
-	"image/jpeg"
-	"image/png"
-	"os"
 )
 
 type UploadAttempt struct {
-	Id               int
-	data             []byte
-	FileName         string
-	FileExt          string
-	UploadRepository string
-	Status           bool
-	DoneChan         chan struct{}
+	Id         int
+	data       []byte
+	FileName   string
+	FileExt    string
+	Repository string
+	Status     bool
+	DoneChan   chan struct{}
 }
 
 type UploadEngine struct {
@@ -26,7 +20,7 @@ type UploadEngine struct {
 	RepositoryPath string
 }
 
-func NewUploadService(maxThreads int, repositoryPath string) (*UploadEngine, error) {
+func NewUploadEngine(maxThreads int, repositoryPath string) (*UploadEngine, error) {
 	if maxThreads < 1 || repositoryPath == "" {
 		return nil, errors.New("Not enough arguments to create upload engine instance")
 	}
@@ -38,11 +32,13 @@ func NewUploadService(maxThreads int, repositoryPath string) (*UploadEngine, err
 	}, nil
 }
 
-func (UE *UploadEngine) addWorker(numOfJobs int) {
+func (UE *UploadEngine) addWorker(numOfJobs int, porpuse string) int {
 
 	workerId := len(UE.workers) + 1
-	Worker := newWorker(workerId, numOfJobs)
+	Worker := newWorker(workerId, numOfJobs, porpuse)
 	UE.workers[workerId] = Worker
+
+	return workerId
 }
 
 func (UE *UploadEngine) deleteWorker(id int) {
@@ -59,4 +55,18 @@ func (UE *UploadEngine) Upload(ImageToUpload []byte, fileName, fileExtension str
 		return errors.New("arguments needed to upload image")
 	}
 
+	Worker := UE.addWorker(len(UE.workers), "upload")
+
+	return errors.New("not implemented yet")
+
+}
+
+func (UE *UploadEngine) Get(fileName string) ([]bytes, error) {
+	if fileName == "" {
+		return nil, errors.New("arguments needed to get an image")
+	}
+
+	Worker := UE.addWorker(len(UE.workers), "get")
+
+	return nil, errors.New("not implemented yet")
 }
