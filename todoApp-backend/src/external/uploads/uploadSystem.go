@@ -3,7 +3,6 @@ package uploads
 import (
 	"errors"
 	"os"
-	"strings"
 )
 
 type UploadAttempt struct {
@@ -53,4 +52,11 @@ func (UE *UploadEngine) Upload(Image []byte, fileName string) error {
 	}
 
 	file, err := os.Create(fileName)
+	if err != nil {
+		return err
+	}
+
+	file.Write(Image)
+
+	return nil
 }
