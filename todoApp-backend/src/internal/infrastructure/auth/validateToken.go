@@ -4,23 +4,23 @@ import (
 	"errors"
 	"fmt"
 	"github.com/golang-jwt/jwt"
-	"shopperia/src/common/models"
+	"todoApp-backend/src/internal/domain"
 )
 
-func ValidateToken(tokenString string) (models.Claims, error) {
-	token, err := jwt.ParseWithClaims(tokenString, &models.Claims{}, verifyFunc)
+func ValidateToken(tokenString string) (domain.Claims, error) {
+	token, err := jwt.ParseWithClaims(tokenString, &domain.Claims{}, verifyFunc)
 	if err != nil {
-		return models.Claims{}, err
+		return domain.Claims{}, err
 	}
 
 	if !token.Valid {
 		fmt.Println("Fallo en auth")
-		return models.Claims{}, errors.New("invalid token")
+		return domain.Claims{}, errors.New("invalid token")
 	}
 
-	claims, ok := token.Claims.(*models.Claims)
+	claims, ok := token.Claims.(*domain.Claims)
 	if !ok {
-		return models.Claims{}, errors.New("No se pudieron obtener los tokens")
+		return domain.Claims{}, errors.New("No se pudieron obtener los tokens")
 	}
 
 	return *claims, nil

@@ -19,6 +19,8 @@ type User struct {
 type UserRepository interface {
 	Save(user *User) error
 	GetUserData(email string) (User, error)
+	GetIdByEmail(email string) (uuid.UUID, error)
+	GetEmailById(id uuid.UUID) (string, error)
 	CheckUserExists(id uuid.UUID) (bool, error)
 }
 
