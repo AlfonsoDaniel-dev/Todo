@@ -53,5 +53,7 @@ func (C *controller) UserRoutes() {
 	userPublicRoutes.Use(middlewares.LogRequest)
 
 	userPublicRoutes.GET("/createuser", C.handlers.createUser)
+	userPublicRoutes.POST("/login", C.handlers.Login)
+	userPublicRoutes.POST("/logi/google", C.handlers.LoginOauth)
 
 }

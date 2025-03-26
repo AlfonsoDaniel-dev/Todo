@@ -5,7 +5,7 @@ create table users (
     id         UUID        not null default uuid_generate_v4(),
     user_name  VARCHAR(80) not NULL,
     email      VARCHAR(60) not NULL,
-    password   BYTEA       not null,
+    password   VARCHAR(240 not null,
     created_at BIGINT      not null default extract(EPOCH from now(),
     updated_at BIGINT
     deleted_at BIGINT

@@ -21,7 +21,8 @@ type UserRepository interface {
 	GetUserData(email string) (User, error)
 	GetIdByEmail(email string) (uuid.UUID, error)
 	GetEmailById(id uuid.UUID) (string, error)
-	CheckUserExists(id uuid.UUID) (bool, error)
+	GetUserPassword(id uuid.UUID) (string, error)
+	CheckUserExists(email string) (bool, error)
 }
 
 func NewUser(UserName, Email string, Password string) (User, error) {

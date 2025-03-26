@@ -7,21 +7,38 @@ import (
 	"todoApp-backend/src/internal/infrastructure/DTO"
 )
 
-func (S *UserServices) Login(loginDTO DTO.LoginDTO) (string, error) {
+func (S *UserServices) Login(loginDTO DTO.LoginDTO) error {
 	if loginDTO.Email == "" || loginDTO.Password == "" {
-		return "", errors.New("Username or Password is empty")
+		return domain.ErrInvalidLoginForm
 	}
 
-	// TODO Login proccess
-	// 1. get password from db with the email
-	// 2. compare form password with db password
-	// 3. if it's ok generate jwt and send it through client request, if it's not ok we will return a 401 code
-	//  verify request
-	// 1. request will pass for auth middleware who will know it's a valid token
-	// 2. if pass handler will extract email from the JWT and send it to the useService who need it
+	// 1. verify User exists
+	exists, err := S.Repository.CheckUserExists(loginDTO.Email)
+	if !errors.Is(err, domain.ErrNotFound) {
+		return err
+	} else if !exists {
+		return domain.ErrNotFound
+	}
+	// get password from db with the email
 
-	return "", nil
+	userId, err := S.Repository.GetIdByEmail(loginDTO.Email)
+	if err != nil {
+		return err
+	}
 
+	userPassword, err := S.Repository.GetUserPassword(userId)
+	if err != nil {
+		return err
+	}
+
+	// compare form password with db password
+
+	ok := domain.ComparePassword(loginDTO.Password, userPassword)
+	if !ok {
+		return domain.ErrWrongPassword
+	}
+
+	return nil
 }
 
 func (S *UserServices) OAuthLogin(userName, email string) error {

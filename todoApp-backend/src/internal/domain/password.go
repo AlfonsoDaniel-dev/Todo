@@ -3,7 +3,6 @@ package domain
 import (
 	"errors"
 	"golang.org/x/crypto/bcrypt"
-	"log"
 	"math/rand"
 )
 
@@ -49,10 +48,10 @@ func newPassword(passwordString string) (*password, error) {
 	return &PasswordObj, nil
 }
 
-func comparePassword(password string, hashedPassword string) bool {
+func ComparePassword(password string, hashedPassword string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
 	if err != nil {
-		log.Printf("error trying to compare password. error: %s\n", err)
+		return false
 	}
 
 	return true
