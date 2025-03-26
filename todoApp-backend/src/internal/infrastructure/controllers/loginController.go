@@ -26,15 +26,11 @@ func (h *handler) Login(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, response)
 	}
 
-	switch err {
+	if errors.Is(err, domain.ErrNotFound) {
 
-	case errors.Is(err, domain.ErrNotFound):
-		response := responses.NewResponse("error", "user not found", err)
-		return c.JSON(http.StatusNotFound, response)
-
-	case errors.Is(err, domain.ErrWrongPassword):
-		response := responses.NewResponse("error", "wrong password", err)
-		return c.JSON(http.StatusUnauthorized, response)
+	} else if errors.Is(err, domain.ErrWrongPassword) {
+		response := responses.NewResponse("error", "login failed", err)
+		return c.JSON(http.StatusInternalServerError, response)
 	}
 
 	token, err := auth.GenerateToken(form.Email)
@@ -43,8 +39,9 @@ func (h *handler) Login(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, response)
 	}
 
-	response := responses.NewResponse("ok", "user Login Success")
+	response := responses.NewResponse("ok", "user Login Success", token)
 
+	return c.JSON(http.StatusOK, response)
 }
 
 func (h *handler) LoginOauth(c echo.Context) error {

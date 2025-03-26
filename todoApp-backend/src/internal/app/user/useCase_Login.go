@@ -14,7 +14,7 @@ func (S *UserServices) Login(loginDTO DTO.LoginDTO) error {
 
 	// 1. verify User exists
 	exists, err := S.Repository.CheckUserExists(loginDTO.Email)
-	if !errors.Is(err, domain.ErrNotFound) {
+	if !errors.Is(err, domain.ErrNotFound) { // check if it is an error while getting the data from DB
 		return err
 	} else if !exists {
 		return domain.ErrNotFound

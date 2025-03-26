@@ -2,7 +2,6 @@ package user
 
 import (
 	"errors"
-	"github.com/google/uuid"
 	"strings"
 	"todoApp-backend/src/internal/domain"
 	"todoApp-backend/src/internal/infrastructure/DTO"
@@ -21,7 +20,7 @@ func (S *UserServices) CreateUser(UserDTO *DTO.UserDTO) error {
 		return err
 	}
 
-	userExists, err := S.Repository.CheckUserExists(User.Id)
+	userExists, err := S.Repository.CheckUserExists(UserDTO.Email)
 	if userExists {
 		return errors.New("user already exists")
 	}
