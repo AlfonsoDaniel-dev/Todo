@@ -33,32 +33,3 @@ func (S *UserServices) CreateUser(UserDTO *DTO.UserDTO) error {
 
 	return nil
 }
-
-func (S *UserServices) OAuthLogin(userName, email string) error {
-	if userName == "" || email == "" {
-		return errors.New("username or email are required")
-	}
-
-	id, err := S.Repository.GetIdByEmail(email)
-	if id != uuid.Nil && err == nil {
-
-		return domain.UserAlreadyExists
-
-	} else if errors.Is(err, domain.ErrNotFound) {
-		userPassword := domain.GeneratePassword()
-
-		user, err := domain.NewUser(userName, email, userPassword)
-		if err != nil {
-			return err
-		}
-
-		err = S.Repository.Save(&user)
-		if err != nil {
-			return err
-		}
-
-		return domain.ErrNotFound
-	}
-
-	return err
-}
