@@ -29,7 +29,7 @@ func (h *handler) LoginOauth(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, response)
 	}
 
-	err = h.UserServices.CreateUserForOAuth(UserName, UserEmail)
+	err = h.UserServices.OAuthLogin(UserName, UserEmail)
 	if errors.Is(err, domain.UserAlreadyExists) {
 
 		token, err := auth.GenerateToken(UserEmail)
@@ -38,20 +38,20 @@ func (h *handler) LoginOauth(c echo.Context) error {
 			return c.JSON(http.StatusInternalServerError, response)
 		}
 
-		response := responses.NewResponse("ok", "user created successfully", map[string]string{"token": token})
+		response := responses.NewResponse("ok", "user Login Success", map[string]string{"token": token})
 		return c.JSON(http.StatusOK, response)
-	} else if err == nil {
+	} else if errors.Is(err, domain.ErrNotFound) {
 		token, err := auth.GenerateToken(UserEmail)
 		if err != nil {
 			response := responses.NewResponse("error", "error while generating token", nil)
 			return c.JSON(http.StatusInternalServerError, response)
 		}
 
-		response := responses.NewResponse("ok", "login successfully", map[string]string{"token": token})
+		response := responses.NewResponse("ok", "user created successfully", map[string]string{"token": token})
 
 		return c.JSON(http.StatusOK, response)
 	}
 
-	response := responses.NewResponse("error", "login failed", nil)
+	response := responses.NewResponse("error", "login failed", err)
 	return c.JSON(http.StatusInternalServerError, response)
 }
