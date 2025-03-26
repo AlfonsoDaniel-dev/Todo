@@ -1,5 +1,6 @@
 package controllers
 
+import "C"
 import (
 	"github.com/labstack/echo/v4"
 	"todoApp-backend/src/internal/app/task"
@@ -27,17 +28,21 @@ func newHandler(userRepository domain.UserRepository, taskRepository domain.Task
 type controller struct {
 	E              *echo.Echo
 	handlers       *handler
+	Groups         *echo.Group
 	UserRepository domain.UserRepository
 	TaskRepository domain.TaskRepository
 }
 
-func NewController(userRepository domain.UserRepository, taskRepository domain.TaskRepository) *controller {
+func NewController(userRepository domain.UserRepository, taskRepository domain.TaskRepository, echo *echo.Echo) *controller {
 
 	handler := newHandler(userRepository, taskRepository)
 
+	Groups := echo.Group("/api/v1")
+
 	return &controller{
-		E:              echo.New(),
+		E:              echo,
 		handlers:       handler,
+		Groups:         Groups,
 		UserRepository: userRepository,
 		TaskRepository: taskRepository,
 	}
@@ -49,11 +54,15 @@ func (C *controller) MountEndpoints() {
 
 func (C *controller) UserRoutes() {
 
-	userPublicRoutes := C.E.Group("/user")
+	userPublicRoutes := C.Groups.Group("/user")
 	userPublicRoutes.Use(middlewares.LogRequest)
 
 	userPublicRoutes.GET("/createuser", C.handlers.createUser)
 	userPublicRoutes.POST("/login", C.handlers.Login)
 	userPublicRoutes.POST("/logi/google", C.handlers.LoginOauth)
+
+	userPrivateRoutes := C.Groups.Group("/user/private")
+
+	userPrivateRoutes.Use(middlewares.AuthMiddleWare)
 
 }

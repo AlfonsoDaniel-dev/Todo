@@ -24,7 +24,6 @@ func ValidateToken(tokenString string) (domain.Claims, error) {
 	}
 
 	return *claims, nil
-
 }
 
 func verifyFunc(t *jwt.Token) (interface{}, error) {
