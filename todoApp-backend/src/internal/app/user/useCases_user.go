@@ -33,7 +33,7 @@ func (S *UserServices) CreateUser(UserDTO *DTO.UserDTO) error {
 	return nil
 }
 
-func (S *UserServices) GetUserData(email string) (DTO.GetUser, error) {
+func (S *UserServices) GetUser(email string) (DTO.GetUser, error) {
 	if email == "" {
 		return DTO.GetUser{}, errors.New("email is empty")
 	}
