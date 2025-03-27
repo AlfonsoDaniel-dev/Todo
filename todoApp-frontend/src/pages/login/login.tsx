@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const Auth = () => {
+const Login = () => {
 
 
     const [count, setCount] = useState<number>(0)
@@ -21,4 +21,4 @@ const Auth = () => {
     )
 }
 
-export default Auth
+export default Login
