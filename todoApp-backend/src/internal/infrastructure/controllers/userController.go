@@ -28,3 +28,5 @@ func (h *handler) createUser(c echo.Context) error {
 
 	return c.JSON(http.StatusCreated, form)
 }
+
+func (h *handler)

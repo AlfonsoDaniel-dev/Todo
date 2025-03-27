@@ -33,6 +33,32 @@ func (S *UserServices) CreateUser(UserDTO *DTO.UserDTO) error {
 	return nil
 }
 
+func (S *UserServices) GetUserData(email string) (DTO.GetUser, error) {
+	if email == "" {
+		return DTO.GetUser{}, errors.New("email is empty")
+	}
+
+	ok, err := S.Repository.CheckUserExists(email)
+	if err != nil {
+		return DTO.GetUser{}, err
+	} else if !ok {
+		return DTO.GetUser{}, domain.ErrNotFound
+	}
+
+	usr, err := S.Repository.GetUserData(email)
+	if err != nil {
+		return DTO.GetUser{}, err
+	}
+
+	dto := DTO.GetUser{
+		Username:  usr.Username,
+		Email:     usr.Email.Value,
+		CreatedAt: usr.CreatedAt,
+	}
+
+	return dto, nil
+}
+
 func (S *UserServices) UpdateUserName(form DTO.UpdateUserName, userEmail string) error {
 	if form.NewUserName == "" || userEmail == "" {
 		return errors.New("all fields are required")
