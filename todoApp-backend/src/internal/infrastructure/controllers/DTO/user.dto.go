@@ -32,5 +32,5 @@ type UpdateUserPassword struct {
 }
 
 type DeleteUser struct {
-	OldPassword string `json:"oldPassword"`
+	Password string `json:"oldPassword"`
 }

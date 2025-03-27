@@ -25,7 +25,7 @@ type UserRepository interface {
 	UpdateName(NewName string, id uuid.UUID) error
 	UpdateEmail(Email string, id uuid.UUID) error
 	UpdatePassword(Password string, id uuid.UUID) error
-
+	DeleteUser(id uuid.UUID) error
 	CheckUserExists(email string) (bool, error)
 }
 
