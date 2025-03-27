@@ -97,6 +97,36 @@ func (S *UserServices) UpdateUserPassword(form DTO.UpdateUserPassword, userEmail
 	return nil
 }
 
-func (S *UserServices) DeleteUser(deleteform DTO.DeleteUser) error {
+func (S *UserServices) DeleteUser(deleteForm DTO.DeleteUser, email string) error {
+	if deleteForm.Password == "" {
+		return errors.New("old password is empty")
+	}
+
+	ok, err := S.Repository.CheckUserExists(email)
+	if err != nil {
+		return err
+	} else if !ok {
+		return domain.ErrNotFound
+	}
+
+	usrId, err := S.Repository.GetIdByEmail(email)
+	if err != nil {
+		return err
+	}
+
+	usrPassword, err := S.Repository.GetUserPassword(usrId)
+	if err != nil {
+		return err
+	}
+	ok = domain.ComparePassword(deleteForm.Password, usrPassword)
+	if !ok {
+		return domain.ErrWrongPassword
+	}
+
+	err = S.Repository.DeleteUser(usrId)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
