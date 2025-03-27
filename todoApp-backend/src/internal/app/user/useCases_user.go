@@ -96,3 +96,7 @@ func (S *UserServices) UpdateUserPassword(form DTO.UpdateUserPassword, userEmail
 
 	return nil
 }
+
+func (S *UserServices) DeleteUser(deleteform DTO.DeleteUser) error {
+	return nil
+}
