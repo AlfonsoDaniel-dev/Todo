@@ -57,9 +57,9 @@ func (C *controller) UserRoutes() {
 	userPublicRoutes := C.Groups.Group("/user")
 	userPublicRoutes.Use(middlewares.LogRequest)
 
-	userPublicRoutes.GET("/createuser", C.handlers.createUser)
+	userPublicRoutes.GET("/create", C.handlers.createUser)
 	userPublicRoutes.POST("/login", C.handlers.Login)
-	userPublicRoutes.POST("/logi/google", C.handlers.LoginOauth)
+	userPublicRoutes.POST("/login/google/:code", C.handlers.LoginOauth)
 
 	userPrivateRoutes := C.Groups.Group("/user/private")
 
