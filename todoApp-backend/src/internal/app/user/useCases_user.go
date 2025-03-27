@@ -4,7 +4,7 @@ import (
 	"errors"
 	"strings"
 	"todoApp-backend/src/internal/domain"
-	"todoApp-backend/src/internal/infrastructure/DTO"
+	"todoApp-backend/src/internal/infrastructure/controllers/DTO"
 )
 
 func (S *UserServices) CreateUser(UserDTO *DTO.UserDTO) error {
@@ -26,6 +26,70 @@ func (S *UserServices) CreateUser(UserDTO *DTO.UserDTO) error {
 	}
 
 	err = S.Repository.Save(&User)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (S *UserServices) UpdateUserName(form DTO.UpdateUserName, userEmail string) error {
+	if form.NewUserName == "" || userEmail == "" {
+		return errors.New("all fields are required")
+	}
+
+	userId, err := S.Repository.GetIdByEmail(userEmail)
+	if err != nil {
+		return err
+	}
+
+	err = S.Repository.UpdateName(form.NewUserName, userId)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (S *UserServices) UpdateUserEmail(form DTO.UpdateUserEmail, userEmail string) error {
+	if form.NewEmail == "" || userEmail == "" {
+		return errors.New("all fields are required")
+	}
+
+	userId, err := S.Repository.GetIdByEmail(userEmail)
+	if err != nil {
+		return err
+	}
+
+	err = S.Repository.UpdateEmail(form.NewEmail, userId)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (S *UserServices) UpdateUserPassword(form DTO.UpdateUserPassword, userEmail string) error {
+	if form.NewPassword == "" || userEmail == "" {
+		return errors.New("all fields are required")
+	}
+
+	userId, err := S.Repository.GetIdByEmail(userEmail)
+	if err != nil {
+		return err
+	}
+
+	oldPassword, err := S.Repository.GetUserPassword(userId)
+	if err != nil {
+		return err
+	}
+
+	ok := domain.ComparePassword(oldPassword, form.OldPassword)
+	if !ok {
+		return domain.ErrWrongPassword
+	}
+
+	err = S.Repository.UpdatePassword(form.NewPassword, userId)
 	if err != nil {
 		return err
 	}

@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/labstack/echo/v4"
 	"net/http"
-	"todoApp-backend/src/internal/infrastructure/DTO"
+	"todoApp-backend/src/internal/infrastructure/controllers/DTO"
 )
 
 func (h *handler) createUser(c echo.Context) error {

@@ -22,6 +22,10 @@ type UserRepository interface {
 	GetIdByEmail(email string) (uuid.UUID, error)
 	GetEmailById(id uuid.UUID) (string, error)
 	GetUserPassword(id uuid.UUID) (string, error)
+	UpdateName(NewName string, id uuid.UUID) error
+	UpdateEmail(Email string, id uuid.UUID) error
+	UpdatePassword(Password string, id uuid.UUID) error
+
 	CheckUserExists(email string) (bool, error)
 }
 
