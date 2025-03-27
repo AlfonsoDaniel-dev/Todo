@@ -6,6 +6,7 @@ import (
 	"github.com/labstack/echo/v4"
 	"net/http"
 	"todoApp-backend/src/internal/domain"
+	"todoApp-backend/src/internal/infrastructure/auth"
 	"todoApp-backend/src/internal/infrastructure/controllers/DTO"
 	"todoApp-backend/src/internal/infrastructure/responses"
 )
@@ -33,9 +34,15 @@ func (h *handler) CreateUser(c echo.Context) error {
 
 func (h *handler) GetUser(c echo.Context) error {
 
-	email := c.Request().Header.Get("authorization")
-	if email == "" {
+	token := c.Request().Header.Get("authorization")
+	if token == "" {
 		response := responses.NewResponse("error", "couldn't read user token", nil)
+		return c.JSON(http.StatusUnauthorized, response)
+	}
+
+	email, err := auth.GetEmailFromToken(token)
+	if err != nil {
+		response := responses.NewResponse("error", "couldn't read user email", nil)
 		return c.JSON(http.StatusUnauthorized, response)
 	}
 
@@ -49,5 +56,36 @@ func (h *handler) GetUser(c echo.Context) error {
 	}
 
 	response := responses.NewResponse("ok", "user obtained successfully", user)
+	return c.JSON(http.StatusOK, response)
+}
+
+func (h *handler) UpdateName(c echo.Context) error {
+
+	token := c.Request().Header.Get("authorization")
+
+	email, err := auth.GetEmailFromToken(token)
+	if err != nil {
+		response := responses.NewResponse("error", "couldn't read user email", nil)
+		return c.JSON(http.StatusUnauthorized, response)
+	}
+
+	form := DTO.UpdateUserName{}
+
+	err = c.Bind(&form)
+	if err != nil {
+		response := responses.NewResponse("error", "invalid body", nil)
+		return c.JSON(http.StatusBadRequest, response)
+	}
+
+	err = h.UserServices.UpdateUserName(form, email)
+	if errors.Is(err, domain.ErrNotFound) {
+		response := responses.NewResponse("error", "user not found", nil)
+		return c.JSON(http.StatusUnauthorized, response)
+	} else if err != nil && !errors.Is(err, domain.ErrNotFound) {
+		response := responses.NewResponse("error", "couldn't update user name", nil)
+		return c.JSON(http.StatusOK, response)
+	}
+
+	response := responses.NewResponse("ok", "user updated successfully", nil)
 	return c.JSON(http.StatusOK, response)
 }
