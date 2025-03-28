@@ -161,7 +161,7 @@ func (h *handler) DeleteUser(c echo.Context) error {
 		return c.JSON(http.StatusBadRequest, response)
 	}
 
-	err := h.UserServices.DeleteUser(form, email)
+	err = h.UserServices.DeleteUser(form, email)
 	if errors.Is(err, domain.ErrNotFound) {
 		response := responses.NewResponse("error", "user not found", nil)
 		return c.JSON(http.StatusBadRequest, response)
