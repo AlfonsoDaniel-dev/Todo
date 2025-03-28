@@ -89,3 +89,87 @@ func (h *handler) UpdateName(c echo.Context) error {
 	response := responses.NewResponse("ok", "user updated successfully", nil)
 	return c.JSON(http.StatusOK, response)
 }
+
+func (h *handler) UpdateEmail(c echo.Context) error {
+	token := c.Request().Header.Get("authorization")
+	email, err := auth.GetEmailFromToken(token)
+	if err != nil {
+		response := responses.NewResponse("error", "couldn't read user email", nil)
+		return c.JSON(http.StatusUnauthorized, response)
+	}
+
+	form := DTO.UpdateUserEmail{}
+	err = c.Bind(&form)
+	if err != nil {
+		response := responses.NewResponse("error", "invalid body", nil)
+		return c.JSON(http.StatusBadRequest, response)
+	}
+
+	err = h.UserServices.UpdateUserEmail(form, email)
+	if errors.Is(err, domain.ErrNotFound) {
+		response := responses.NewResponse("error", "user not found", nil)
+		return c.JSON(http.StatusUnauthorized, response)
+	} else if err != nil && !errors.Is(err, domain.ErrNotFound) {
+		response := responses.NewResponse("error", "couldn't update user email", nil)
+		return c.JSON(http.StatusInternalServerError, response)
+	}
+
+	response := responses.NewResponse("ok", "user updated successfully", nil)
+	return c.JSON(http.StatusOK, response)
+}
+
+func (h *handler) UpdatePassword(c echo.Context) error {
+	token := c.Request().Header.Get("authorization")
+	email, err := auth.GetEmailFromToken(token)
+	if err != nil {
+		response := responses.NewResponse("error", "couldn't read user email", nil)
+		return c.JSON(http.StatusUnauthorized, response)
+	}
+
+	form := DTO.UpdateUserPassword{}
+	err = c.Bind(&form)
+	if err != nil {
+		response := responses.NewResponse("error", "invalid body", nil)
+		return c.JSON(http.StatusBadRequest, response)
+	}
+
+	err = h.UserServices.UpdateUserPassword(form, email)
+	if errors.Is(err, domain.ErrNotFound) {
+		response := responses.NewResponse("error", "user not found", nil)
+		return c.JSON(http.StatusUnauthorized, response)
+	} else if err != nil && !errors.Is(err, domain.ErrNotFound) {
+		response := responses.NewResponse("error", "couldn't update user password", nil)
+		return c.JSON(http.StatusInternalServerError, response)
+	}
+
+	response := responses.NewResponse("ok", "user updated successfully", nil)
+	return c.JSON(http.StatusOK, response)
+}
+
+func (h *handler) DeleteUser(c echo.Context) error {
+	token := c.Request().Header.Get("authorization")
+	email, err := auth.GetEmailFromToken(token)
+	if err != nil {
+		response := responses.NewResponse("error", "couldn't read user email", nil)
+		return c.JSON(http.StatusUnauthorized, response)
+	}
+
+	form := DTO.DeleteUser{}
+	err = c.Bind(&form)
+	if err != nil {
+		response := responses.NewResponse("error", "invalid body", nil)
+		return c.JSON(http.StatusBadRequest, response)
+	}
+
+	err := h.UserServices.DeleteUser(form, email)
+	if errors.Is(err, domain.ErrNotFound) {
+		response := responses.NewResponse("error", "user not found", nil)
+		return c.JSON(http.StatusBadRequest, response)
+	} else if err != nil && !errors.Is(err, domain.ErrNotFound) {
+		response := responses.NewResponse("error", "couldn't delete user data", nil)
+		return c.JSON(http.StatusInternalServerError, response)
+	}
+
+	response := responses.NewResponse("ok", "user deleted successfully", nil)
+	return c.JSON(http.StatusOK, response)
+}
