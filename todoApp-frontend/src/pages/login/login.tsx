@@ -11,7 +11,6 @@ const Login = () => {
 
     return (
         <>
-
             <h1>Auth</h1>
             <div>This is the Auth page</div>
             <button onClick={handleClick}>{count}</button>

@@ -6,14 +6,17 @@ import { CallBack } from './pages/login/callback.tsx'
 function App() {
 
   return (
-    <Routes>
+    
+      <Routes>
+
         <Route path="/" element={<Home />}/>
 
-        <Route path="/auth" element={<Login/>}>
-           <Route path="/callback" element={<CallBack/>}/>
-        </Route>
+        <Route path="/login" element={<Login />}/>
         
-    </Routes>
+        <Route path="/login/callback" element={<CallBack />}/>
+
+      </Routes>
+    
   )
 }
 
