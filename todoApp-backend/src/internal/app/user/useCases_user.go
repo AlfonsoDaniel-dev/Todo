@@ -45,7 +45,11 @@ func (S *UserServices) GetUser(email string) (DTO.GetUser, error) {
 		return DTO.GetUser{}, domain.ErrNotFound
 	}
 
-	usr, err := S.Repository.GetUserData(email)
+	id, err := S.Repository.GetIdByEmail(email)
+	if err != nil {
+		return DTO.GetUser{}, err
+	}
+	usr, err := S.Repository.GetUserData(id)
 	if err != nil {
 		return DTO.GetUser{}, err
 	}
