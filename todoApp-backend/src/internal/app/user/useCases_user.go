@@ -4,7 +4,7 @@ import (
 	"errors"
 	"strings"
 	"todoApp-backend/src/internal/domain"
-	"todoApp-backend/src/internal/infrastructure/controllers/DTO"
+	"todoApp-backend/src/internal/infrastructure/DTO"
 )
 
 func (S *UserServices) CreateUser(UserDTO *DTO.UserDTO) error {

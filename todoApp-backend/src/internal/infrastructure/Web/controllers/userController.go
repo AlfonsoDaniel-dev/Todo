@@ -6,8 +6,8 @@ import (
 	"github.com/labstack/echo/v4"
 	"net/http"
 	"todoApp-backend/src/internal/domain"
+	"todoApp-backend/src/internal/infrastructure/DTO"
 	"todoApp-backend/src/internal/infrastructure/auth"
-	"todoApp-backend/src/internal/infrastructure/controllers/DTO"
 	"todoApp-backend/src/internal/infrastructure/responses"
 )
 

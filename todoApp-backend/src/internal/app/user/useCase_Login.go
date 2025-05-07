@@ -4,7 +4,7 @@ import (
 	"errors"
 	"github.com/google/uuid"
 	"todoApp-backend/src/internal/domain"
-	"todoApp-backend/src/internal/infrastructure/controllers/DTO"
+	"todoApp-backend/src/internal/infrastructure/DTO"
 )
 
 func (S *UserServices) Login(loginDTO DTO.LoginDTO) error {
