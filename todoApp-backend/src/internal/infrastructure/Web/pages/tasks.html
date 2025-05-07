@@ -2,7 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>{{ .Title }}</title>
+    <link rel="icon" href="#" type="image/png">
+    <link rel="stylesheet" href="./styles/normalize.css">
+    <link rel="stylesheet" href="./styles/styles.css">
 </head>
 <body>
 
@@ -16,7 +19,7 @@
 
         </nav>
 
-        <h1>{{ title }}</h1>
+        <h1>{{ .Title }}</h1>
 
     </header>
 
