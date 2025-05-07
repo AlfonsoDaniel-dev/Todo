@@ -5,7 +5,6 @@ import (
 	"errors"
 	"github.com/google/uuid"
 	"todoApp-backend/src/internal/domain"
-	"todoApp-backend/src/internal/infrastructure/repositories"
 )
 
 type userRepository struct {
@@ -13,13 +12,12 @@ type userRepository struct {
 }
 
 func (UR *userRepository) GetUserData(id uuid.UUID) (*domain.User, error) {
-	//TODO implement me
 
 	if id == uuid.Nil {
 		return nil, domain.ErrIdIsNotValid
 	}
 
-	stmt, err := UR.db.Prepare(repositories.getUserOnDB)
+	stmt, err := UR.db.Prepare(getUserOnDB)
 	if err != nil {
 		return nil, err
 	}
@@ -44,7 +42,7 @@ func (UR *userRepository) GetIdByEmail(email string) (uuid.UUID, error) {
 		return uuid.Nil, domain.ErrIdIsNotValid
 	}
 
-	stmt, err := UR.db.Prepare(repositories.getUserIdByEmailOnDB)
+	stmt, err := UR.db.Prepare(getUserIdByEmailOnDB)
 	if err != nil {
 		return uuid.Nil, err
 	}
@@ -67,7 +65,7 @@ func (UR *userRepository) GetEmailById(id uuid.UUID) (string, error) {
 		return "", domain.ErrIdIsNotValid
 	}
 
-	stmt, err := UR.db.Prepare(repositories.getUserEmailByIdOnDB)
+	stmt, err := UR.db.Prepare(getUserEmailByIdOnDB)
 	if err != nil {
 		return "", err
 	}
@@ -89,7 +87,7 @@ func (UR *userRepository) GetUserPassword(id uuid.UUID) (string, error) {
 	if id == uuid.Nil {
 		return "", domain.ErrIdIsNotValid
 	}
-	stmt, err := UR.db.Prepare(repositories.getUserPassword)
+	stmt, err := UR.db.Prepare(getUserPassword)
 	if err != nil {
 		return "", err
 	}
@@ -117,7 +115,7 @@ func (UR *userRepository) UpdateName(NewName string, id uuid.UUID) error {
 		return err
 	}
 
-	stmt, err := tx.Prepare(repositories.userUpdateName)
+	stmt, err := tx.Prepare(userUpdateName)
 	if err != nil {
 		tx.Rollback()
 		return err
@@ -148,7 +146,7 @@ func (UR *userRepository) UpdateEmail(NewEmail string, id uuid.UUID) error {
 		return err
 	}
 
-	stmt, err := tx.Prepare(repositories.userUpdateEmail)
+	stmt, err := tx.Prepare(userUpdateEmail)
 	if err != nil {
 		tx.Rollback()
 		return err
@@ -181,7 +179,7 @@ func (UR *userRepository) UpdatePassword(Password string, id uuid.UUID) error {
 		return err
 	}
 
-	stmt, err := tx.Prepare(repositories.userUpdatePassword)
+	stmt, err := tx.Prepare(userUpdatePassword)
 	if err != nil {
 		tx.Rollback()
 		return err
@@ -213,7 +211,7 @@ func (UR *userRepository) DeleteUser(id uuid.UUID) error {
 		return err
 	}
 
-	stmt, err := tx.Prepare(repositories.userDeleteInfo)
+	stmt, err := tx.Prepare(deleteUser)
 	if err != nil {
 		tx.Rollback()
 		return err
@@ -266,7 +264,7 @@ func (UR *userRepository) Save(user *domain.User) error {
 		return err
 	}
 
-	stmt, err := tx.Prepare(repositories.saveUserOnDB)
+	stmt, err := tx.Prepare(saveUserOnDB)
 	if err != nil {
 		return err
 	}

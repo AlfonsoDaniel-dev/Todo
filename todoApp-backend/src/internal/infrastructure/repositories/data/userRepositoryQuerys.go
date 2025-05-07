@@ -21,3 +21,5 @@ const userDeleteInfo = "DELETE FROM users WHERE id=$1"
 const userUpdatePassword = " UPDATE users SET password=$1 WHERE id=$2"
 
 const CheckUserExists = " SELECT EXISTS (SELECT id FROM users WHERE email=$1)"
+
+const deleteUser = "DELETE FROM users WHERE id=$1"
