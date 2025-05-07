@@ -53,11 +53,10 @@ func (C *controller) MountEndpoints() {
 }
 
 func (C *controller) UserRoutes() {
-
 	userPublicRoutes := C.Groups.Group("/user")
 	userPublicRoutes.Use(middlewares.LogRequest)
 
-	userPublicRoutes.GET("/create", C.handlers.createUser)
+	userPublicRoutes.GET("/create", C.handlers.CreateUser)
 	userPublicRoutes.POST("/login", C.handlers.Login)
 	userPublicRoutes.POST("/login/google/:code", C.handlers.LoginOauth)
 
