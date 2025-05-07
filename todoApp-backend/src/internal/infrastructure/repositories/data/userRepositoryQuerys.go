@@ -1,4 +1,4 @@
-package repositories
+package data
 
 const saveUserOnDB = "INSERT INTO users (id, user_name, email, password, created_at) VALUES ($1, $2, $3, $4, $5) RETURNING created_at"
 

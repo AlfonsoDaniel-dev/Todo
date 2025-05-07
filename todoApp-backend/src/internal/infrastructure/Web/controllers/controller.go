@@ -6,7 +6,7 @@ import (
 	"todoApp-backend/src/internal/app/task"
 	"todoApp-backend/src/internal/app/user"
 	"todoApp-backend/src/internal/domain"
-	"todoApp-backend/src/internal/infrastructure/middlewares"
+	middlewares2 "todoApp-backend/src/internal/infrastructure/Web/middlewares"
 )
 
 type handler struct {
@@ -54,7 +54,7 @@ func (C *controller) MountEndpoints() {
 
 func (C *controller) UserRoutes() {
 	userPublicRoutes := C.Groups.Group("/user")
-	userPublicRoutes.Use(middlewares.LogRequest)
+	userPublicRoutes.Use(middlewares2.LogRequest)
 
 	userPublicRoutes.GET("/create", C.handlers.CreateUser)
 	userPublicRoutes.POST("/login", C.handlers.Login)
@@ -62,6 +62,6 @@ func (C *controller) UserRoutes() {
 
 	userPrivateRoutes := C.Groups.Group("/user/private")
 
-	userPrivateRoutes.Use(middlewares.AuthMiddleWare)
+	userPrivateRoutes.Use(middlewares2.AuthMiddleWare)
 
 }

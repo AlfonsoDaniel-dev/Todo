@@ -3,8 +3,8 @@ package middlewares
 import (
 	"github.com/labstack/echo/v4"
 	"net/http"
+	"todoApp-backend/src/internal/infrastructure/Web/responses"
 	"todoApp-backend/src/internal/infrastructure/auth"
-	"todoApp-backend/src/internal/infrastructure/responses"
 )
 
 func AuthMiddleWare(f echo.HandlerFunc) echo.HandlerFunc {
