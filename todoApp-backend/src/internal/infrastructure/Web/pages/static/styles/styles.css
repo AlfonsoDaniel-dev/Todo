@@ -1,0 +1,236 @@
+html {
+    box-sizing: border-box;
+    font-size: 62.5%;
+    background-color: #FFFCF2;
+}
+
+*, *:after {
+    box-sizing: inherit;
+}
+
+a {
+    text-decoration: none;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    font-size: 1.6rem;
+    line-height: 2rem;
+}
+
+h1, h2, h3 {
+    font-family: "Raleway", sans-serif;
+}
+
+p {
+    color: #403D39;
+}
+
+input,
+textarea,
+select,
+button {
+    all: unset;
+    box-sizing: border-box;
+}
+
+.site-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #403D39;
+    height: 12vh;
+    margin-bottom: 4rem;
+}
+
+.page-navigation-container {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    margin-left: 2rem;
+}
+
+.page-services-container{
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    margin-right: 4rem;
+}
+
+.title-container{
+    padding: 0.5rem;
+    text-align: center;
+}
+
+.title{
+    color: #FAF8EE;
+}
+
+.navbar-container{
+    display: flex;
+    align-items: center;
+    margin-left: 2rem;
+}
+
+.navbar{
+    display: flex;
+    gap: 3rem;
+    align-items: center;
+}
+
+.navbar-list-item{
+    text-decoration: none;
+    color: #FAF8EE;
+}
+
+.github-icon{
+    display: inline-block;
+    width: 2rem;
+    height: 2rem;
+    background-color: #FAF8EE;
+}
+
+.github-icon img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+.login-register-btn a{
+    background-color: #EB5E28;
+    padding: 1rem;
+    border-radius: 1rem;
+    color: #FAF8EE;
+    transition: background-color 0.2s ease;
+}
+
+.login-register-btn a:hover{
+    color: #403D39;
+    background-color: #FAF8EE;
+}
+
+.main-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+}
+
+.login-container {
+    width: 50rem;
+    border-style: solid;
+    border-color: #e0e0e0;
+    border-radius: 1rem;
+    margin: 2rem auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-container h2 {
+    font-size: 3.2rem;
+}
+
+.login-form{
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+}
+
+.field-input{
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem
+}
+
+.field-input label{
+    color: #403D39;
+    font-weight: bold;
+    margin-bottom: 0.8rem;
+    font-size: 2rem;
+}
+
+.field-input input{
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.2s ease;
+}
+
+.field-input input:focus{
+    border: solid 0.2rem #403D39;
+}
+
+.submit-button{
+    background-color: #EB5E28;
+    color: #FAF8EE;
+    border-radius: 1rem;
+    padding: 1rem;
+    justify-self: center;
+    transition: background-color 0.2s ease;
+}
+
+.submit-button:hover{
+    color: #403D39;
+    background-color: #FAF8EE;
+    border-color: #EB5E28;
+    border-style: solid;
+}
+
+.register-login-text a {
+    color: #EB5E28;
+    text-decoration: underline;
+    text-align: center;
+}
+
+.another-login-option-text{
+    text-align: center;
+    color: #CCC5B9;
+    font-size: 1rem;
+    font-weight: 200;
+    border-bottom: 0.2rem solid rgba(204, 197, 185, 0.5);
+    width:  70%;
+}
+
+.login-option-btn-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1rem;
+    border: 0.2rem solid #e0e0e0;
+    border-radius: 5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.login-option-btn-container:hover {
+    background-color: #f5f5f5;
+    border-color: #EB5E28;
+}
+
+.login-option-btn-container img {
+    width: 2.4rem;
+    height: 2.4rem;
+}
+
+.login-option-btn-container p {
+    margin: 0;
+    font-size: 1.4rem;
+}
+
+
+.site-footer {
+    margin-top: 5rem;
+    border-top: 0.2rem solid #e0e0e0;
+    text-align: center;
+}
