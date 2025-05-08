@@ -6,6 +6,7 @@
     <link rel="icon" href="#" type="image/png">
     <link rel="stylesheet" href="static/styles/normalize.css">
     <link rel="stylesheet" href="static/styles/styles.css">
+    <link rel="stylesheet" href="static/styles/login.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
@@ -14,14 +15,14 @@
 
         <div class="page-navigation-container">
             <div class="title-container">
-                <h1 class="title">{{ .Title }}</h1>
+                <h1 class="title">{{ .AppName }}</h1>
             </div>
 
             <div class="navbar-container">
                 <nav class="navbar">
                     <a class="navbar-list-item" href="./home.html">Home</a>
                     <a class="navbar-list-item" href="#">Pricing</a>
-                    <a class="navbar-list-item" href="#">FaQ</a>
+                    <a class="navbar-list-item" href="./faq.html">FAQ</a>
                     <a class="navbar-list-item github-icon" href="">
                         <img src="static/icons/githubIcon.png" alt="user-icon" title="mi github"/>
                     </a>
@@ -32,14 +33,16 @@
         <div class="page-services-container">
 
             <div class="login-register-btn">
-                <a href="./register.html">Register</a>
+                <a href="./signup.html">Sign-up</a>
             </div>
+
+
         </div>
 
     </header>
 
 
-    <main class="main-content">
+    <main class="login-main-content">
 
         <section class="login-container">
 
@@ -63,7 +66,7 @@
             </form>
 
             <div class="register-login-text">
-            <p>I don't have an account, what should I do? <a  class="" href="./register.html">Create an account</a></p>
+            <p>I don't have an account, what should I do? <a  class="" href="signup.html">Create an account</a></p>
             </div>
 
             <div class="another-login-option-text" >

@@ -22,6 +22,12 @@ h1, h2, h3 {
     font-family: "Raleway", sans-serif;
 }
 
+h1 {
+    overflow-wrap: break-word;
+    white-space: normal;
+    word-break: break-word;
+}
+
 p {
     color: #403D39;
 }
@@ -34,13 +40,16 @@ button {
     box-sizing: border-box;
 }
 
+.c-white{
+    color: #FAF8EE;
+}
+
 .site-header{
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: #403D39;
     height: 12vh;
-    margin-bottom: 4rem;
 }
 
 .page-navigation-container {
@@ -110,40 +119,9 @@ button {
     background-color: #FAF8EE;
 }
 
-.main-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 80vh;
-}
-
-.login-container {
-    width: 50rem;
-    border-style: solid;
-    border-color: #e0e0e0;
-    border-radius: 1rem;
-    margin: 2rem auto;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    justify-content: center;
-    align-items: center;
-    padding: 2rem;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.login-container h2 {
-    font-size: 3.2rem;
-}
-
-.login-form{
-    width: 100%;
-    height: 100%;
-
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-
+.site-footer {
+    border-top: 0.2rem solid #e0e0e0;
+    text-align: center;
 }
 
 .field-input{
@@ -172,11 +150,13 @@ button {
 
 .submit-button{
     background-color: #EB5E28;
+    text-align: center;
     color: #FAF8EE;
     border-radius: 1rem;
     padding: 1rem;
     justify-self: center;
     transition: background-color 0.2s ease;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 .submit-button:hover{
@@ -186,51 +166,44 @@ button {
     border-style: solid;
 }
 
-.register-login-text a {
-    color: #EB5E28;
-    text-decoration: underline;
-    text-align: center;
-}
-
-.another-login-option-text{
-    text-align: center;
-    color: #CCC5B9;
-    font-size: 1rem;
-    font-weight: 200;
-    border-bottom: 0.2rem solid rgba(204, 197, 185, 0.5);
-    width:  70%;
-}
-
-.login-option-btn-container {
+.tsv-checkbox-container {
     display: flex;
     align-items: center;
-    justify-content: center;
     gap: 1rem;
     padding: 1rem;
-    border: 0.2rem solid #e0e0e0;
-    border-radius: 5rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
+    border-radius: 1rem;
+    transition: all 0.2s ease;
+    color: #403D39;
 }
 
-.login-option-btn-container:hover {
-    background-color: #f5f5f5;
+.tsv-checkbox-container input[type="checkbox"] {
+    appearance: none;
+    width: 2rem;
+    height: 2rem;
+    border: 0.2rem solid #403D39;
+    border-radius: 0.4rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.tsv-checkbox-container input[type="checkbox"]:checked {
+    background-color: #EB5E28;
     border-color: #EB5E28;
 }
 
-.login-option-btn-container img {
-    width: 2.4rem;
-    height: 2.4rem;
-}
-
-.login-option-btn-container p {
-    margin: 0;
+.tsv-checkbox-container input[type="checkbox"]:checked::after {
+    content: "✓";
+    position: absolute;
+    color: #FAF8EE;
     font-size: 1.4rem;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.tsv-checkbox-container:hover {
+    background-color: rgba(64, 61, 57, 0.1);
 }
 
 
-.site-footer {
-    margin-top: 5rem;
-    border-top: 0.2rem solid #e0e0e0;
-    text-align: center;
-}

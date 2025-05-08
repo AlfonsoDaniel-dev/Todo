@@ -7,32 +7,119 @@
     <link rel="icon" href="#" type="image/png">
     <link rel="stylesheet" href="static/styles/normalize.css">
     <link rel="stylesheet" href="static/styles/styles.css">
+    <link rel="stylesheet" href="static/styles/home.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <header>
-        <nav>
+    <header class="site-header">
 
-            <a href="#">Login</a>
-            <a href="#">Register</a>
-            <a href="#">Your tasks</a>
-            <a href="#">Profile</a>
-            <a href="#">Logout</a>
-            <a href="#">Dashboard</a>
+        <div class="page-navigation-container">
+            <div class="title-container">
+                <h1 class="title">{{ .AppName }}</h1>
+            </div>
 
-        </nav>
+            <div class="navbar-container">
+                <nav class="navbar">
+                    <a class="navbar-list-item" href="./home.html">Home</a>
+                    <a class="navbar-list-item" href="#">Pricing</a>
+                    <a class="navbar-list-item" href="./faq.html">FAQ</a>
+                    <a class="navbar-list-item github-icon" href="">
+                        <img src="static/icons/githubIcon.png" alt="user-icon" title="mi github"/>
+                    </a>
+                </nav>
+            </div>
+        </div>
 
-        <h1>{{ .Title }}</h1>
+        <div class="page-services-container">
+
+            <div class="login-register-btn">
+                <a class="merriwheather" href="./signup.html">Sign-up</a>
+            </div>
+
+            <div class="login-register-btn">
+                <a href="./login.html">Sign-in</a>
+            </div>
+        </div>
+
     </header>
 
-    <main>
+    <main class="home-main-content">
+
+        <div class="introduction-content">
+
+            <section class="presentation-container">
+                <div class="presentation-content">
+                    <h1 class="presentation-title">Plan the next movements <br> you're going to make </h1>
+                    <p class="presentation-text merriwheather">Work smarter, not harder. With {{ .AppName }} you could set up all the following steps to achieve. <br> Your goals in your job, school, day or in your personal projects.</p>
+                    <p class="presentation-text text2 merriwheather">{{ .AppName }} is what you've been searching for all this time, give it a try and fall in love with it. The best part is... you can start for free!!</p>
+                </div>
+            </section>
+
+            <section class="call-to-action-container" id="call-to-action">
+                <form class="join-now-form" id="form" action="" method="post">
+
+                    <div class="field-input">
+                        <label class="merriwheather" for="email"  >Email</label>
+                        <input type="email" name="email" id="email" placeholder="myemailaddress@todo.com" required>
+                    </div>
+
+                    <div class="field-input">
+                        <label class="merriwheather" for="password">Password</label>
+                        <input type="password" name="password" id="password" placeholder="yournewpassword" required>
+                    </div>
+
+                    <div class="tsv-checkbox-container">
+                        <label class="merriwheather" for="tsv">TSV?</label>
+                        <input type="checkbox" name="TSV" id="tsv" >
+                    </div>
+
+                    <div class="submit-button-container">
+                        <button class="submit-button" type="submit">Join now</button>
+                    </div>
+                </form>
+            </section>
+
+        </div>
+
+        <section class="convincing-speech-container">
+            <h2 class="subtitle" >Control yourself. Push your limits</h2>
+            <div class="speech-container">
+                <div class = "speech-text-container">
+                    <p> Control, we always say that we have control of our own life, but <br> <br> <strong>is it that true? <br><br> Do you really have control over your own mind? </strong> <br> <br> Well our mission in {{ .AppName }} is to help you to recover control over yourself, to help you push your own limits and achieve your goals. </p>
+                </div>
+                <div class="speech-image-container">
+                    <img class="speech-image-container" src="./static/assets/boxeador2.jpg" alt="image of earnings">
+                </div>
+            </div>
+
+        </section>
+
+        <section class="organization-speech-container">
+            <h2 class="subtitle">Looking for a tool to help organize teamworks?</h2>
+            <div class="speech-image-container" >
+                <div class="speech-image-container">
+                    <img class="speech-image-container" src="./static/assets/management.jpg" alt="image of earnings">
+                </div>
+                <div class="speech-text-container">
+                    <p><strong>Tired of starting a new project without any plan?</strong><br><br>Well us too, so we decide to implement a way to use our powerful app to create a wonderful experience of project management. <br><br> our powerful system can help you to organize your project, track the development process, and also it can manage the distribution of tasks among teammates</p>
+                </div>
+            </div>
+        </section>
 
     </main>
 
-    <footer>
+    <footer class="site-footer">
 
+        <div class="subscribe-container">
+            <h2 class="last-subtitle">So you have reasons left to don't get started?</h2>
+
+            <a class="get-started-btn" href="signup.html">Get started!</a>
+        </div>
+
+        <p>Copyright &copy; 2025</p>
     </footer>
-
-
 </body>
 </html>

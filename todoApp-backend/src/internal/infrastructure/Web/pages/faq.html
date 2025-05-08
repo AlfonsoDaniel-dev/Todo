@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ .AppName }}</title>
+    <link rel="stylesheet" href="./static/styles/normalize.css">
+    <link rel="stylesheet" href="./static/styles/styles.css">
+    <link rel="stylesheet" href="./static/styles/faq.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header class="site-header">
+
+        <div class="page-navigation-container">
+            <div class="title-container">
+                <h1 class="title">{{ .AppName }}</h1>
+            </div>
+
+            <div class="navbar-container">
+                <nav class="navbar">
+                    <a class="navbar-list-item" href="./home.html">Home</a>
+                    <a class="navbar-list-item" href="#">Pricing</a>
+                    <a class="navbar-list-item" href="./faq.html">FAQ</a>
+                    <a class="navbar-list-item github-icon" href="">
+                        <img src="static/icons/githubIcon.png" alt="user-icon" title="mi github"/>
+                    </a>
+                </nav>
+            </div>
+        </div>
+
+        <div class="page-services-container">
+
+            <div class="login-register-btn">
+                <a class="merriwheather" href="./signup.html">Sign-up</a>
+            </div>
+
+            <div class="login-register-btn">
+                <a href="./login.html">Sign-in</a>
+            </div>
+        </div>
+
+    </header>
+
+</body>
+</html>

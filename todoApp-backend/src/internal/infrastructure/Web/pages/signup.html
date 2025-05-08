@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ .Title }}</title>
+    <link rel="icon" href="#" type="image/png">
+    <link rel="stylesheet" href="static/styles/normalize.css">
+    <link rel="stylesheet" href="static/styles/styles.css">
+    <link rel="stylesheet" href="static/styles/signup.css">
+</head>
+<body>
+
+
+<header class="site-header">
+
+    <div class="page-navigation-container">
+        <div class="title-container">
+            <h1 class="title">{{ .AppName }}</h1>
+        </div>
+
+        <div class="navbar-container">
+            <nav class="navbar">
+                <a class="navbar-list-item" href="./home.html">Home</a>
+                <a class="navbar-list-item" href="#">Pricing</a>
+                <a class="navbar-list-item" href="faq.html">FAQ</a>
+                <a class="navbar-list-item github-icon" href="">
+                    <img src="static/icons/githubIcon.png" alt="user-icon" title="mi github"/>
+                </a>
+            </nav>
+        </div>
+    </div>
+
+    <div class="page-services-container">
+
+        <div class="login-register-btn">
+            <a href="./login.html">Sign-in</a>
+        </div>
+
+
+    </div>
+
+</header>
+
+
+<main class="login-main-content">
+
+    <section class="login-container">
+
+        <h2>Sign-up</h2>
+
+        <form class="login-form" action="http://127.0.0.1/api/auth" method="post">
+
+            <div class="field-input">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" placeholder="youremail@todo.com" required>
+            </div>
+            <div class="field-input">
+                <label for="email">Password</label>
+                <input type="password" name="password" id="password" placeholder="123456" required>
+            </div>
+            <div class="tsv-checkbox-container">
+                <label for="tsv">TSV Or Two Steps Verification to this Email?</label>
+                <input type="checkbox" name="TSV" id="tsv" >
+            </div>
+
+            <div class="submit-button-container">
+                <button class="submit-button" type="submit">Sign-in</button>
+            </div>
+
+        </form>
+
+        <div class="register-login-text">
+            <p>I already have an account, where should I go? <a  class="" href="./login.html">Log into account</a></p>
+        </div>
+
+        <div class="another-login-option-text" >
+            <p>Or sign-up with</p>
+        </div>
+
+
+        <div class="login-options">
+
+            <div class="login-option-btn-container">
+                <p>Sign-up with Google</p>
+
+                <a href="#">
+                    <img src="static/assets/googleICO.png" alt="google-icon">
+                </a>
+            </div>
+
+
+        </div>
+
+    </section>
+
+</main>
+
+<footer class="site-footer">
+    <p>Copyright &copy; 2025</p>
+</footer>
+
+</body>
+</html>
