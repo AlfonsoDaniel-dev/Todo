@@ -7,6 +7,7 @@ import (
 	"log"
 	"os"
 	"sync"
+	"todoApp-backend/src/external/DataBase"
 )
 
 var (
@@ -35,6 +36,13 @@ func connectDB(user, password, dbName, host, port, sslmode string) {
 		fmt.Println("database pinned")
 
 		log.Println("Successfully connected to database")
+
+		migrator := DataBase.NewMigrator(db)
+
+		if err := migrator.Migrate(); err != nil {
+			log.Fatalf("error while migrating database: %v", err)
+		}
+
 	})
 }
 
