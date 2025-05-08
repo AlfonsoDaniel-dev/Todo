@@ -1,6 +1,6 @@
 package user
 
-import "todoApp-backend/src/internal/domain"
+import "todoApp-backend/src/Core/domain"
 
 type UserServices struct {
 	Repository domain.UserRepository

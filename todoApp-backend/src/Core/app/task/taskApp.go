@@ -1,6 +1,6 @@
 package task
 
-import "todoApp-backend/src/internal/domain"
+import "todoApp-backend/src/Core/domain"
 
 type TaskServices struct {
 	taskRepository domain.TaskRepository

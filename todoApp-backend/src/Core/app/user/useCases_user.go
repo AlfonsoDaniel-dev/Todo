@@ -3,8 +3,8 @@ package user
 import (
 	"errors"
 	"strings"
-	"todoApp-backend/src/internal/domain"
-	"todoApp-backend/src/internal/infrastructure/Web/DTO"
+	"todoApp-backend/src/Core/domain"
+	"todoApp-backend/src/Core/infrastructure/Web/DTO"
 )
 
 func (S *UserServices) CreateUser(UserDTO *DTO.UserDTO) error {

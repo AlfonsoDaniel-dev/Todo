@@ -4,48 +4,58 @@ import (
 	"github.com/labstack/echo/v4"
 	"net/http"
 	"os"
-	"todoApp-backend/src/internal/infrastructure/Web/responses"
+	"todoApp-backend/src/Core/infrastructure/Web/responses"
 )
 
 func (h *handler) HomePage(c echo.Context) error {
 
-	PageTitle := os.Getenv("APP_PAGE_TITLE")
-	if PageTitle == "" {
+	appName := os.Getenv("APP_NAME")
+	if appName == "" {
 		response := responses.NewResponse("error", "error while serving Page", nil)
 		return c.JSON(http.StatusInternalServerError, response)
 	}
 
-	return c.Render(200, "", PageTitle)
+	return c.Render(200, "", appName)
 }
 
 func (h *handler) LoginPage(c echo.Context) error {
-	PageTitle := os.Getenv("APP_PAGE_TITLE")
-	if PageTitle == "" {
+	appName := os.Getenv("APP_NAME")
+	if appName == "" {
 		response := responses.NewResponse("error", "error while serving Page", nil)
 		return c.JSON(http.StatusInternalServerError, response)
 	}
 
-	return c.Render(200, "", PageTitle)
+	return c.Render(200, "", appName)
 }
 
-func (h *handler) RegisterPage(c echo.Context) error {
+func (h *handler) SignUpPage(c echo.Context) error {
 
-	PageTitle := os.Getenv("APP_PAGE_TITLE")
-	if PageTitle == "" {
+	appName := os.Getenv("APP_NAME")
+	if appName == "" {
 		response := responses.NewResponse("error", "error while serving Page", nil)
 		return c.JSON(http.StatusInternalServerError, response)
 	}
 
-	return c.Render(200, "", PageTitle)
+	return c.Render(200, "", appName)
+}
+
+func (h *handler) FaqPage(c echo.Context) error {
+	appName := os.Getenv("APP_NAME")
+	if appName == "" {
+		response := responses.NewResponse("error", "error while serving Page", nil)
+		return c.JSON(http.StatusInternalServerError, response)
+	}
+
+	return c.Render(200, "", appName)
 }
 
 func (h *handler) DashboardPage(c echo.Context) error {
 
-	PageTitle := os.Getenv("APP_PAGE_TITLE")
-	if PageTitle == "" {
+	appName := os.Getenv("APP_NAME")
+	if appName == "" {
 		response := responses.NewResponse("error", "error while serving Page", nil)
 		return c.JSON(http.StatusInternalServerError, response)
 	}
 
-	return c.Render(200, "", PageTitle)
+	return c.Render(200, "", appName)
 }

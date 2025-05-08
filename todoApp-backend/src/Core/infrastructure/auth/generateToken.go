@@ -2,7 +2,7 @@ package auth
 
 import (
 	"github.com/golang-jwt/jwt"
-	"todoApp-backend/src/internal/domain"
+	"todoApp-backend/src/Core/domain"
 )
 
 func GenerateToken(email string) (string, error) {

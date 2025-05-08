@@ -4,22 +4,22 @@ import (
 	"database/sql"
 	"errors"
 	"github.com/google/uuid"
-	"todoApp-backend/src/internal/domain"
+	"todoApp-backend/src/Core/domain"
 )
 
 type userRepository struct {
 	db *sql.DB
 }
 
-func (UR *userRepository) GetUserData(id uuid.UUID) (*domain.User, error) {
+func (UR *userRepository) GetUserData(id uuid.UUID) (domain.User, error) {
 
 	if id == uuid.Nil {
-		return nil, domain.ErrIdIsNotValid
+		return domain.User{}, domain.ErrIdIsNotValid
 	}
 
 	stmt, err := UR.db.Prepare(getUserOnDB)
 	if err != nil {
-		return nil, err
+		return domain.User{}, err
 	}
 
 	defer stmt.Close()
@@ -29,12 +29,12 @@ func (UR *userRepository) GetUserData(id uuid.UUID) (*domain.User, error) {
 
 	err = row.Scan(user.Id, user.Username, user.Email, user.Password, user.CreatedAt, user.UpdatedAt)
 	if errors.Is(err, sql.ErrNoRows) {
-		return nil, domain.ErrNotFound
+		return domain.User{}, domain.ErrNotFound
 	} else if err != nil && !errors.Is(err, sql.ErrNoRows) {
-		return nil, err
+		return domain.User{}, err
 	}
 
-	return user, nil
+	return *user, nil
 }
 
 func (UR *userRepository) GetIdByEmail(email string) (uuid.UUID, error) {

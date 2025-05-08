@@ -4,9 +4,10 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"net/http"
+	"todoApp-backend/src/Core/infrastructure/Web/controllers"
 )
 
-func NewHttp() *echo.Echo {
+func NewHttp(templatesDir string) *echo.Echo {
 
 	server := echo.New()
 
@@ -19,6 +20,11 @@ func NewHttp() *echo.Echo {
 
 	server.Use(middleware.Recover())
 	server.Use(middleware.Logger())
+
+	templateEngine := newTemplates(templatesDir)
+	server.Renderer = templateEngine
+
+	controller := controllers.NewController()
 
 	return server
 }

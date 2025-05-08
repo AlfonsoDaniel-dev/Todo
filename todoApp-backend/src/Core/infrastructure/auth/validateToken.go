@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/golang-jwt/jwt"
-	"todoApp-backend/src/internal/domain"
+	"todoApp-backend/src/Core/domain"
 )
 
 func ValidateToken(tokenString string) (domain.Claims, error) {

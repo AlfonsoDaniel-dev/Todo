@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"todoApp-backend/cmd/config"
+	"todoApp-backend/src/Core/infrastructure/Web/controllers"
 )
 
 func main() {
@@ -20,7 +21,13 @@ func main() {
 	fmt.Println("Connected to database")
 	defer db.Close()
 
-	http := config.NewHttp()
+	templatesDir := os.Getenv("TEMPLATES_DIR")
+
+	http := config.NewHttp(templatesDir)
+
+	controller := controllers.NewController(db, http)
+
+	controller.MountEndpoints()
 
 	fmt.Println("Starting server")
 

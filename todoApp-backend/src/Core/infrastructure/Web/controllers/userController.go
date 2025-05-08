@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"github.com/labstack/echo/v4"
 	"net/http"
-	"todoApp-backend/src/internal/domain"
-	"todoApp-backend/src/internal/infrastructure/Web/DTO"
-	"todoApp-backend/src/internal/infrastructure/Web/responses"
-	"todoApp-backend/src/internal/infrastructure/auth"
+	"todoApp-backend/src/Core/domain"
+	"todoApp-backend/src/Core/infrastructure/Web/DTO"
+	"todoApp-backend/src/Core/infrastructure/Web/responses"
+	"todoApp-backend/src/Core/infrastructure/auth"
 )
 
 func (h *handler) CreateUser(c echo.Context) error {

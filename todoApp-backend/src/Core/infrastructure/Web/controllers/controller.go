@@ -2,13 +2,14 @@ package controllers
 
 import "C"
 import (
+	"database/sql"
 	"github.com/labstack/echo/v4"
-	"io"
 	"os"
-	"todoApp-backend/src/internal/app/task"
-	"todoApp-backend/src/internal/app/user"
-	"todoApp-backend/src/internal/domain"
-	middlewares2 "todoApp-backend/src/internal/infrastructure/Web/middlewares"
+	"todoApp-backend/src/Core/app/task"
+	"todoApp-backend/src/Core/app/user"
+	"todoApp-backend/src/Core/domain"
+	middlewares2 "todoApp-backend/src/Core/infrastructure/Web/middlewares"
+	"todoApp-backend/src/Core/infrastructure/repositories/data"
 )
 
 type handler struct {
@@ -41,19 +42,17 @@ type controller struct {
 	TaskRepository domain.TaskRepository
 }
 
-type templateRenderer interface {
-	Render(w io.Writer, name string, data interface{}, c echo.Context) error
-}
+func NewController(db *sql.DB, echo *echo.Echo) *controller {
 
-func NewController(userRepository domain.UserRepository, taskRepository domain.TaskRepository, echo *echo.Echo, renderer templateRenderer) *controller {
+	userRepository := data.NewUserRepository(db)
+
+	taskRepository := data.NewTaskRepository(db)
 
 	handler := newHandler(userRepository, taskRepository)
 
 	apiGroups := echo.Group("/api/v1")
 
 	appRoutes := apiGroups.Group("/")
-
-	echo.Renderer = renderer
 
 	return &controller{
 		E:              echo,
@@ -67,7 +66,12 @@ func NewController(userRepository domain.UserRepository, taskRepository domain.T
 
 func (C *controller) MountEndpoints() {
 
-	C.AppRoutes.GET("/home", C.handlers.HomePage)
+	C.E.Static("/static", "../static/pages/static")
+
+	C.AppRoutes.GET("/", C.handlers.HomePage)
+	C.AppRoutes.GET("/login", C.handlers.LoginPage)
+	C.AppRoutes.GET("/signup", C.handlers.SignUpPage)
+	C.AppRoutes.GET("/faq", C.handlers.FaqPage)
 
 	C.UserRoutes()
 }
@@ -83,5 +87,11 @@ func (C *controller) UserRoutes() {
 	userPrivateRoutes := C.ApiGroups.Group("/user/private")
 
 	userPrivateRoutes.Use(middlewares2.AuthMiddleWare)
+
+}
+
+func (C *controller) TaskRoutes() {
+	taskPublicRoutes := C.ApiGroups.Group("/task")
+	taskPublicRoutes.Use(middlewares2.LogRequest)
 
 }

@@ -1,6 +1,6 @@
 package app
 
-import "todoApp-backend/src/internal/domain"
+import "todoApp-backend/src/Core/domain"
 
 type AppService struct {
 	Repository domain.AppRepository
