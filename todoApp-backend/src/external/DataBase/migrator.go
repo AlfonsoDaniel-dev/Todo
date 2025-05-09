@@ -11,29 +11,42 @@ type Migrator struct {
 
 func (m *Migrator) Migrate() error {
 
-	querys := []string{userTable, taskTable}
+	querys := []string{uuidExtension, userTable, taskTable}
 
 	tx, err := m.db.Begin()
 	if err != nil {
 		log.Fatalf("couldn't create transaction: %v", err)
 	}
 
-	for _, query := range querys {
+	for i, query := range querys {
 		stmt, err := tx.Prepare(query)
 		if err != nil {
-			log.Fatalf("couldn't prepare statement: %v", err)
+			if err := tx.Rollback(); err != nil {
+				log.Fatalf("couldn't rollback transaction: %v", err)
+			}
+			log.Fatalf("couldn't prepare statement: %v failed on query n: %v", err, i)
 		}
 
 		_, err = stmt.Exec()
 		if err != nil {
+			if err := tx.Rollback(); err != nil {
+				log.Fatalf("couldn't rollback transaction: %v", err)
+			}
 			log.Fatalf("couldn't execute statement: %v", err)
 		}
+
 		if err := stmt.Close(); err != nil {
+			if err := tx.Rollback(); err != nil {
+				log.Fatalf("couldn't rollback transaction: %v", err)
+			}
 			log.Fatalf("couldn't close statement: %v", err)
 		}
 	}
 
 	if err := tx.Commit(); err != nil {
+		if err := tx.Rollback(); err != nil {
+			log.Fatalf("couldn't rollback transaction: %v", err)
+		}
 		log.Fatalf("couldn't commit transaction: %v", err)
 	}
 

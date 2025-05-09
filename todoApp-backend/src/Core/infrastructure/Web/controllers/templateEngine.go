@@ -1,4 +1,4 @@
-package config
+package controllers
 
 import (
 	"fmt"
@@ -9,8 +9,6 @@ import (
 	"path/filepath"
 )
 
-// TODO implement templates configuration
-
 type templates struct {
 	Templates *template.Template
 	PagesDir  string
@@ -20,7 +18,7 @@ func (t *templates) Render(w io.Writer, templateName string, templateData interf
 	return t.Templates.ExecuteTemplate(w, templateName, templateData)
 }
 
-func NewTemplates(pagesDir string) *templates {
+func newTemplates(pagesDir string) *templates {
 
 	t := &templates{
 		PagesDir: pagesDir,

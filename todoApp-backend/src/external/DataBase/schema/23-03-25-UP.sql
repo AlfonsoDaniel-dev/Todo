@@ -1,7 +1,7 @@
 
 create extension if not exists "uuis-ossp";
 
-create table users (
+create table IF NOT EXISTS users (
     id         UUID        not null default uuid_generate_v4(),
     user_name  VARCHAR(80) not NULL,
     email      VARCHAR(60) not NULL,
@@ -15,7 +15,7 @@ create table users (
  );
 
 
-create table tasks (
+create table IF NOT EXISTS tasks (
     id UUID not null default uuid_generate_v4()
     owner_id UUID not null,
     title VARCHAR(80) not null,

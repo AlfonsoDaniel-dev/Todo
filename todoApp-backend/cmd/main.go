@@ -23,11 +23,9 @@ func main() {
 
 	templatesDir := os.Getenv("TEMPLATES_DIR")
 
-	http := config.NewHttp(templatesDir)
+	http := config.NewHttp()
 
-	controller := controllers.NewController(db, http)
-
-	controller.MountEndpoints()
+	controllers.NewController(db, http, templatesDir)
 
 	fmt.Println("Starting server")
 
