@@ -58,7 +58,7 @@ func (h *handler) FaqPage(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, response)
 	}
 
-	return c.Render(200, "", appName)
+	return c.Render(200, "faq.html", appName)
 }
 
 func (h *handler) DashboardPage(c echo.Context) error {
@@ -69,5 +69,10 @@ func (h *handler) DashboardPage(c echo.Context) error {
 		return c.JSON(http.StatusInternalServerError, response)
 	}
 
-	return c.Render(200, "", appName)
+	return c.Render(200, "dashboard.html", appName)
+}
+
+func (h *handler) PricingPage(c echo.Context) error {
+
+	return c.Render(200, "pricing.html", nil)
 }

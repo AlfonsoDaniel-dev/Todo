@@ -82,9 +82,11 @@ func (C *controller) AppPublicRoutes() {
 	appPublicRoutes.GET("/login", C.handlers.LoginPage)
 	appPublicRoutes.GET("/signup", C.handlers.SignUpPage)
 	appPublicRoutes.GET("/faq", C.handlers.FaqPage)
+	appPublicRoutes.GET("pricing", C.handlers.PricingPage)
 
-	C.AppRoutes = appPublicRoutes.Group("")
+	C.AppRoutes = appPublicRoutes
 }
+
 func (C *controller) UserRoutes() {
 
 	PublicRoutes := C.ApiGroups.Group("/user")
